@@ -56,5 +56,15 @@ namespace UnitofWorkGenericRepo.Controllers
             await unitOfWork.ComplateAsync();
             return NoContent();
         }
+        [HttpDelete]
+        [Route("DeleteCategory/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Category category =await unitOfWork.Categories.GetById(id);
+            if(category == null) return BadRequest();
+            await unitOfWork.Categories.Delete(id);
+            await unitOfWork.ComplateAsync();   
+            return Ok(category);
+        }
     }
 }
